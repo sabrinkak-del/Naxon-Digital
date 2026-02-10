@@ -26,29 +26,22 @@ const Contact: React.FC = () => {
     setStatus('loading');
 
     try {
-      const res = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer re_EWnM1q4w_6nVLaUmYKnjhU9Mc9P6FnQDH' // המפתח שסיפקת
+      // שימוש ב-FormSubmit כדי לעקוף את בעיית ה-CORS של Resend בדפדפן
+      // השירות שולח את המייל ישירות לכתובת שהוגדרה ב-URL
+      const res = await fetch("https://formsubmit.co/ajax/naxondigital@gmail.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
         },
         body: JSON.stringify({
-          from: 'onboarding@resend.dev', // כתובת ברירת מחדל של Resend (חובה לשימוש עד לאימות דומיין)
-          to: 'sabrinka.k@gmail.com', // המייל המעודכן של המנהלת
-          subject: `פנייה חדשה מאת ${formData.firstName} ${formData.lastName} - ${formData.service}`,
-          html: `
-            <div dir="rtl" style="font-family: sans-serif; color: #333;">
-              <h2 style="color: #d946ef;">פנייה חדשה מאתר Naxon</h2>
-              <p><strong>שם מלא:</strong> ${formData.firstName} ${formData.lastName}</p>
-              <p><strong>אימייל:</strong> ${formData.email}</p>
-              <p><strong>שירות מבוקש:</strong> ${formData.service}</p>
-              <br/>
-              <p><strong>תוכן ההודעה:</strong></p>
-              <div style="background-color: #f3f4f6; padding: 15px; border-radius: 8px;">
-                ${formData.message}
-              </div>
-            </div>
-          `
+          _subject: `פנייה חדשה מאת ${formData.firstName} ${formData.lastName} - ${formData.service}`,
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          service: formData.service,
+          message: formData.message,
+          _template: "table",
+          _captcha: "false" // מונע את דף ה-CAPTCHA אם אפשר
         })
       });
 
@@ -67,8 +60,7 @@ const Contact: React.FC = () => {
         // חזרה למצב רגיל
         setTimeout(() => setStatus('idle'), 4000);
       } else {
-        const errorData = await res.json();
-        console.error('Resend API Error:', errorData);
+        console.error('Submission failed');
         setStatus('error');
         setTimeout(() => setStatus('idle'), 3000);
       }

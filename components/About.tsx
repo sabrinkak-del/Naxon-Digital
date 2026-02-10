@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Target, Zap, Users } from 'lucide-react';
 
 const About: React.FC = () => {
@@ -24,7 +24,7 @@ const About: React.FC = () => {
             מי אנחנו
           </div>
           <h2 className="text-5xl font-black mb-6 text-white leading-tight opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            אנחנו <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-600">Naxon</span>.
+            אנחנו <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-600">נקסון</span>.
             <br />
             יוצרים את המחר.
           </h2>
