@@ -42,6 +42,14 @@ const Projects: React.FC = () => {
       tags: ['Flutter', 'Solidity', 'AWS'],
       image: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=800',
       color: 'from-violet-500 to-purple-600',
+    },
+    {
+      title: 'NeuroWrite',
+      category: 'AI Tool',
+      description: 'מערכת ליצירת תוכן שיווקי אוטומטי המבוססת על מודלי שפה מתקדמים, החוסכת זמן ומשאבים לצוותי קריאייטיב.',
+      tags: ['OpenAI API', 'Next.js', 'PostgreSQL'],
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+      color: 'from-blue-600 to-indigo-600',
     }
   ];
 
