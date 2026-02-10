@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
               </div>
               <div className="text-right">
                 <div className="text-sm text-gray-500 mb-1">מייל</div>
-                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">naxondigital@gmail.com</div>
+                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">sabrikdigital@gmail.com</div>
               </div>
             </div>
 

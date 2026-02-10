@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import About from './components/About';
 import Contact from './components/Contact';
+import Projects from './components/Projects';
 
 function App() {
   const [activePage, setActivePage] = useState('home');
@@ -15,6 +16,8 @@ function App() {
         return <Hero onNavigate={setActivePage} />;
       case 'services':
         return <Services />;
+      case 'projects':
+        return <Projects />;
       case 'about':
         return <About />;
       case 'contact':

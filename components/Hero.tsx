@@ -60,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 textShadow: '0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(217, 70, 239, 0.2)'
               }}
             >
-              Naxon
+              Sabrik
             </span>
             <span className="text-fuchsia-500 drop-shadow-[0_0_15px_rgba(217,70,239,0.8)]">.</span>
           </h1>

@@ -24,12 +24,12 @@ const About: React.FC = () => {
             מי אנחנו
           </div>
           <h2 className="text-5xl font-black mb-6 text-white leading-tight opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            אנחנו <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-600">Naxon</span>.
+            אנחנו <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-purple-600">Sabrik</span>.
             <br />
             יוצרים את המחר.
           </h2>
           <p className="text-lg text-gray-300 mb-6 leading-relaxed opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            נקסון היא סוכנות דיגיטל הדור החדש. אנחנו משלבים טכנולוגיה עילית עם עיצוב פורץ דרך כדי לבנות מותגים שלא רק נראים טוב, אלא גם עובדים מצוין.
+            סבריק היא סוכנות דיגיטל הדור החדש. אנחנו משלבים טכנולוגיה עילית עם עיצוב פורץ דרך כדי לבנות מותגים שלא רק נראים טוב, אלא גם עובדים מצוין.
           </p>
           <p className="text-lg text-gray-400 mb-8 leading-relaxed opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             הצוות שלנו מורכב ממפתחים, מעצבים ואנשי שיווק שחיים ונושמים את הרשת. המטרה שלנו היא לקחת את העסק שלך צעד אחד קדימה אל עבר העתיד.

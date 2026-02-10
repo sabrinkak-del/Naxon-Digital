@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, MessageSquare, Layout, User } from 'lucide-react';
+import { Home, MessageSquare, Layout, User, Briefcase } from 'lucide-react';
 
 interface SidebarProps {
   activePage: string;
@@ -27,6 +27,12 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
           label="שירותים"
           active={activePage === 'services'} 
           onClick={() => onNavigate('services')} 
+        />
+        <SidebarIcon 
+          icon={<Briefcase size={20} />} 
+          label="פרויקטים"
+          active={activePage === 'projects'} 
+          onClick={() => onNavigate('projects')} 
         />
         <SidebarIcon 
           icon={<MessageSquare size={20} />} 
