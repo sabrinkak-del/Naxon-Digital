@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, Send } from 'lucide-react';
 
 const Contact: React.FC = () => {
   return (
@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
               </div>
               <div className="text-right">
                 <div className="text-sm text-gray-500 mb-1">מייל</div>
-                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">hello@naxon.co.il</div>
+                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">naxondigital@gmail.com</div>
               </div>
             </div>
 
@@ -44,17 +44,7 @@ const Contact: React.FC = () => {
               </div>
               <div className="text-right">
                 <div className="text-sm text-gray-500 mb-1">טלפון</div>
-                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">03-123-4567</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-6 flex-row-reverse group">
-              <div className="w-16 h-16 rounded-2xl bg-gray-900/60 border border-gray-700 flex items-center justify-center text-fuchsia-500 shadow-[0_0_15px_rgba(217,70,239,0.1)] group-hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] group-hover:border-fuchsia-500/50 transition-all duration-300">
-                <MapPin size={28} className="group-hover:scale-110 transition-transform duration-300" />
-              </div>
-              <div className="text-right">
-                <div className="text-sm text-gray-500 mb-1">כתובת</div>
-                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">מגדלי האלופים 22, תל אביב</div>
+                <div className="text-xl font-bold text-white group-hover:text-fuchsia-400 transition-colors">054-472-2893</div>
               </div>
             </div>
           </div>

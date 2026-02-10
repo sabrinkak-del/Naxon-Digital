@@ -12,7 +12,7 @@ function App() {
   const renderContent = () => {
     switch (activePage) {
       case 'home':
-        return <Hero />;
+        return <Hero onNavigate={setActivePage} />;
       case 'services':
         return <Services />;
       case 'about':
@@ -20,7 +20,7 @@ function App() {
       case 'contact':
         return <Contact />;
       default:
-        return <Hero />;
+        return <Hero onNavigate={setActivePage} />;
     }
   };
 

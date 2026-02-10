@@ -19,7 +19,7 @@ const About: React.FC = () => {
       <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         
         {/* Text Section */}
-        <div className="text-right dir-rtl order-2 md:order-1" dir="rtl">
+        <div className="text-right dir-rtl" dir="rtl">
           <div className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-fuchsia-500 uppercase bg-fuchsia-500/10 rounded-full animate-fade-in" style={{ animationDelay: '0.1s' }}>
             מי אנחנו
           </div>
@@ -52,7 +52,7 @@ const About: React.FC = () => {
         </div>
 
         {/* Visual Section */}
-        <div className="relative order-1 md:order-2 flex justify-center opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+        <div className="relative flex justify-center opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
           <div className="relative w-full max-w-sm aspect-square">
             {/* Abstract Shapes */}
             <div className="absolute inset-0 bg-gradient-to-tr from-fuchsia-600 to-purple-600 rounded-full blur-[80px] opacity-40 animate-pulse"></div>

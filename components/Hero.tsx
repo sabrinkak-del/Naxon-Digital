@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigate: (page: string) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -19,6 +23,16 @@ const Hero: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Trigger navigation when loading is complete
+  useEffect(() => {
+    if (progress === 100) {
+      const timer = setTimeout(() => {
+        onNavigate('about');
+      }, 800); // 800ms delay for smooth transition
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onNavigate]);
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen w-full relative z-10 px-4">

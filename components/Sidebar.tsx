@@ -9,13 +9,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
   return (
     <aside className="fixed left-0 top-0 h-full w-16 bg-[#0a0a0a]/80 backdrop-blur-md border-r border-gray-800 flex flex-col items-center py-6 z-50 text-gray-400">
-      <div className="mb-8 cursor-pointer" onClick={() => onNavigate('home')}>
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-[0_0_15px_rgba(217,70,239,0.5)]">
-          N
-        </div>
-      </div>
-
-      <nav className="flex-1 flex flex-col gap-6 w-full items-center">
+      <nav className="flex-1 flex flex-col gap-6 w-full items-center justify-start pt-10">
         <SidebarIcon 
           icon={<Home size={20} />} 
           label="ראשי"
@@ -23,16 +17,16 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
           onClick={() => onNavigate('home')} 
         />
         <SidebarIcon 
-          icon={<Layout size={20} />} 
-          label="שירותים"
-          active={activePage === 'services'} 
-          onClick={() => onNavigate('services')} 
-        />
-        <SidebarIcon 
           icon={<User size={20} />} 
           label="אודות"
           active={activePage === 'about'} 
           onClick={() => onNavigate('about')} 
+        />
+        <SidebarIcon 
+          icon={<Layout size={20} />} 
+          label="שירותים"
+          active={activePage === 'services'} 
+          onClick={() => onNavigate('services')} 
         />
         <SidebarIcon 
           icon={<MessageSquare size={20} />} 
