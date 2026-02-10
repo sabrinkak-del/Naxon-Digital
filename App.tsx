@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ParticleBackground from './components/ParticleBackground';
 import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
+import Services from './components/Services';
+import About from './components/About';
+import Contact from './components/Contact';
 
 function App() {
+  const [activePage, setActivePage] = useState('home');
+
+  const renderContent = () => {
+    switch (activePage) {
+      case 'home':
+        return <Hero />;
+      case 'services':
+        return <Services />;
+      case 'about':
+        return <About />;
+      case 'contact':
+        return <Contact />;
+      default:
+        return <Hero />;
+    }
+  };
+
   return (
     <div className="relative min-h-screen w-full bg-black text-white overflow-hidden selection:bg-fuchsia-500 selection:text-white">
       {/* Background Layer */}
       <ParticleBackground />
       
       {/* UI Layer */}
-      <div className="flex">
+      <div className="flex h-screen overflow-hidden">
         {/* Navigation */}
-        <Sidebar />
+        <Sidebar activePage={activePage} onNavigate={setActivePage} />
         
         {/* Main Content Area */}
-        <div className="flex-1 ml-16">
-          <Hero />
+        <div className="flex-1 ml-16 overflow-y-auto h-full scroll-smooth">
+          {renderContent()}
         </div>
       </div>
       

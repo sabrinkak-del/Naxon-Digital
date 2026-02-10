@@ -1,30 +1,46 @@
 import React from 'react';
-import { Home, MessageSquare, Layout, Edit, Gamepad2, Settings, HelpCircle, Facebook, Activity, X } from 'lucide-react';
+import { Home, MessageSquare, Layout, User } from 'lucide-react';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  activePage: string;
+  onNavigate: (page: string) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ activePage, onNavigate }) => {
   return (
     <aside className="fixed left-0 top-0 h-full w-16 bg-[#0a0a0a]/80 backdrop-blur-md border-r border-gray-800 flex flex-col items-center py-6 z-50 text-gray-400">
-      <div className="mb-8">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
+      <div className="mb-8 cursor-pointer" onClick={() => onNavigate('home')}>
+        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-[0_0_15px_rgba(217,70,239,0.5)]">
           N
         </div>
       </div>
 
       <nav className="flex-1 flex flex-col gap-6 w-full items-center">
-        <SidebarIcon icon={<Home size={20} />} active />
-        <SidebarIcon icon={<MessageSquare size={20} />} />
-        <SidebarIcon icon={<Layout size={20} />} />
-        <SidebarIcon icon={<Edit size={20} />} />
-        <SidebarIcon icon={<Gamepad2 size={20} />} />
-        <SidebarIcon icon={<Activity size={20} />} />
+        <SidebarIcon 
+          icon={<Home size={20} />} 
+          label="ראשי"
+          active={activePage === 'home'} 
+          onClick={() => onNavigate('home')} 
+        />
+        <SidebarIcon 
+          icon={<Layout size={20} />} 
+          label="שירותים"
+          active={activePage === 'services'} 
+          onClick={() => onNavigate('services')} 
+        />
+        <SidebarIcon 
+          icon={<User size={20} />} 
+          label="אודות"
+          active={activePage === 'about'} 
+          onClick={() => onNavigate('about')} 
+        />
+        <SidebarIcon 
+          icon={<MessageSquare size={20} />} 
+          label="צור קשר"
+          active={activePage === 'contact'} 
+          onClick={() => onNavigate('contact')} 
+        />
       </nav>
-
-      <div className="flex flex-col gap-6 w-full items-center mb-4">
-        <SidebarIcon icon={<Facebook size={20} />} color="text-blue-500" />
-        <div className="text-purple-500 font-bold text-lg">Y!</div>
-        <SidebarIcon icon={<Settings size={20} />} />
-        <SidebarIcon icon={<HelpCircle size={20} />} />
-      </div>
     </aside>
   );
 };
@@ -33,13 +49,22 @@ interface SidebarIconProps {
   icon: React.ReactNode;
   active?: boolean;
   color?: string;
+  label?: string;
+  onClick: () => void;
 }
 
-const SidebarIcon: React.FC<SidebarIconProps> = ({ icon, active, color }) => (
+const SidebarIcon: React.FC<SidebarIconProps> = ({ icon, active, color, label, onClick }) => (
   <button 
-    className={`p-2 rounded-lg transition-all duration-300 hover:bg-white/10 ${active ? 'text-white bg-white/10 border-l-2 border-fuchsia-500 rounded-l-none' : ''} ${color || ''}`}
+    onClick={onClick}
+    title={label}
+    className={`p-2 relative group rounded-lg transition-all duration-300 hover:bg-white/10 ${active ? 'text-white bg-white/10 border-l-2 border-fuchsia-500 rounded-l-none' : ''} ${color || ''}`}
   >
     {icon}
+    {active && (
+      <span className="absolute left-full ml-2 px-2 py-1 bg-fuchsia-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
+        {label}
+      </span>
+    )}
   </button>
 );
 
