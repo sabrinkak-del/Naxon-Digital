@@ -1,7 +1,85 @@
-import React from 'react';
-import { Mail, Phone, Send } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Phone, Send, Loader2, CheckCircle, AlertCircle, ChevronDown } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    service: '',
+    message: ''
+  });
+
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === 'loading') return;
+    
+    setStatus('loading');
+
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer re_EWnM1q4w_6nVLaUmYKnjhU9Mc9P6FnQDH' // המפתח שסיפקת
+        },
+        body: JSON.stringify({
+          from: 'onboarding@resend.dev', // כתובת ברירת מחדל של Resend (חובה לשימוש עד לאימות דומיין)
+          to: 'sabrinka.k@gmail.com', // המייל המעודכן של המנהלת
+          subject: `פנייה חדשה מאת ${formData.firstName} ${formData.lastName} - ${formData.service}`,
+          html: `
+            <div dir="rtl" style="font-family: sans-serif; color: #333;">
+              <h2 style="color: #d946ef;">פנייה חדשה מאתר Naxon</h2>
+              <p><strong>שם מלא:</strong> ${formData.firstName} ${formData.lastName}</p>
+              <p><strong>אימייל:</strong> ${formData.email}</p>
+              <p><strong>שירות מבוקש:</strong> ${formData.service}</p>
+              <br/>
+              <p><strong>תוכן ההודעה:</strong></p>
+              <div style="background-color: #f3f4f6; padding: 15px; border-radius: 8px;">
+                ${formData.message}
+              </div>
+            </div>
+          `
+        })
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        
+        // איפוס הטופס לאחר שליחה מוצלחת
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          service: '',
+          message: ''
+        });
+
+        // חזרה למצב רגיל
+        setTimeout(() => setStatus('idle'), 4000);
+      } else {
+        const errorData = await res.json();
+        console.error('Resend API Error:', errorData);
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 3000);
+      }
+
+    } catch (error) {
+      console.error('Error sending form:', error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
+  };
+
   return (
     <div className="w-full min-h-screen p-8 md:p-16 relative z-10 flex flex-col items-center justify-start pt-24">
         <style>
@@ -58,41 +136,109 @@ const Contact: React.FC = () => {
               {/* Glow Effect */}
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-fuchsia-600 rounded-full blur-[100px] opacity-20"></div>
 
-              <form className="space-y-6 relative z-10">
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm text-gray-400">שם פרטי</label>
-                    <input type="text" className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white" />
+                    <input 
+                      type="text" 
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white placeholder-gray-600"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm text-gray-400">שם משפחה</label>
-                    <input type="text" className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white" />
+                    <input 
+                      type="text" 
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white placeholder-gray-600" 
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-400">אימייל</label>
-                  <input type="email" className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white" />
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white placeholder-gray-600" 
+                  />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-400">סוג השירות</label>
-                  <select className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white appearance-none">
-                    <option>פיתוח אתר</option>
-                    <option>אפליקציה</option>
-                    <option>עיצוב</option>
-                    <option>שיווק</option>
-                  </select>
+                  <div className="relative">
+                    <select 
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      required
+                      className={`w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md appearance-none cursor-pointer ${formData.service ? 'text-white' : 'text-gray-500'}`}
+                    >
+                      <option value="" disabled>בחר שירות</option>
+                      <option value="פיתוח אתר" className="bg-gray-900 text-white">פיתוח אתר</option>
+                      <option value="אפליקציה" className="bg-gray-900 text-white">אפליקציה</option>
+                      <option value="עיצוב" className="bg-gray-900 text-white">עיצוב</option>
+                      <option value="שיווק" className="bg-gray-900 text-white">שיווק</option>
+                    </select>
+                    <div className="absolute top-1/2 left-3 transform -translate-y-1/2 pointer-events-none text-gray-400">
+                      <ChevronDown size={18} />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm text-gray-400">הודעה</label>
-                  <textarea rows={4} className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white resize-none"></textarea>
+                  <textarea 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={4} 
+                    className="w-full bg-black/50 border-b border-gray-700 focus:border-fuchsia-500 p-3 outline-none transition-colors rounded-t-md text-white resize-none placeholder-gray-600"
+                  ></textarea>
                 </div>
 
-                <button type="button" className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 group">
-                  <span>שלח הודעה</span>
-                  <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <button 
+                  type="submit" 
+                  disabled={status === 'loading' || status === 'success'}
+                  className={`w-full font-bold py-4 rounded-xl transition-all transform flex items-center justify-center gap-2 group relative overflow-hidden
+                    ${status === 'success' ? 'bg-green-600 text-white' : 
+                      status === 'error' ? 'bg-red-600 text-white' : 
+                      'bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white hover:shadow-[0_0_20px_rgba(217,70,239,0.4)] hover:-translate-y-1'
+                    }
+                  `}
+                >
+                  {status === 'loading' ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      <span>שולח...</span>
+                    </>
+                  ) : status === 'success' ? (
+                    <>
+                      <CheckCircle size={18} />
+                      <span>ההודעה נשלחה!</span>
+                    </>
+                  ) : status === 'error' ? (
+                    <>
+                      <AlertCircle size={18} />
+                      <span>שגיאה, נסה שוב</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>שלח הודעה</span>
+                      <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </>
+                  )}
                 </button>
               </form>
             </div>
