@@ -22,33 +22,32 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (status === 'loading') return;
-    
+
     setStatus('loading');
 
     try {
-      // שימוש ב-FormSubmit כדי לעקוף את בעיית ה-CORS של Resend בדפדפן
-      // השירות שולח את המייל ישירות לכתובת שהוגדרה ב-URL
-      const res = await fetch("https://formsubmit.co/ajax/naxondigital@gmail.com", {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`;
+
+      const res = await fetch(apiUrl, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
+          "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify({
-          _subject: `פנייה חדשה מאת ${formData.firstName} ${formData.lastName} - ${formData.service}`,
-          name: `${formData.firstName} ${formData.lastName}`,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           email: formData.email,
           service: formData.service,
-          message: formData.message,
-          _template: "table",
-          _captcha: "false" // מונע את דף ה-CAPTCHA אם אפשר
+          message: formData.message
         })
       });
 
-      if (res.ok) {
+      const result = await res.json();
+
+      if (res.ok && result.success) {
         setStatus('success');
-        
-        // איפוס הטופס לאחר שליחה מוצלחת
+
         setFormData({
           firstName: '',
           lastName: '',
@@ -57,10 +56,9 @@ const Contact: React.FC = () => {
           message: ''
         });
 
-        // חזרה למצב רגיל
         setTimeout(() => setStatus('idle'), 4000);
       } else {
-        console.error('Submission failed');
+        console.error('Submission failed:', result);
         setStatus('error');
         setTimeout(() => setStatus('idle'), 3000);
       }
