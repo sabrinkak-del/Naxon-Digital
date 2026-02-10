@@ -29,7 +29,7 @@ const About: React.FC = () => {
             יוצרים את המחר.
           </h2>
           <p className="text-lg text-gray-300 mb-6 leading-relaxed opacity-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Naxon היא סוכנות דיגיטל הדור החדש. אנחנו משלבים טכנולוגיה עילית עם עיצוב פורץ דרך כדי לבנות מותגים שלא רק נראים טוב, אלא גם עובדים מצוין.
+            נקסון היא סוכנות דיגיטל הדור החדש. אנחנו משלבים טכנולוגיה עילית עם עיצוב פורץ דרך כדי לבנות מותגים שלא רק נראים טוב, אלא גם עובדים מצוין.
           </p>
           <p className="text-lg text-gray-400 mb-8 leading-relaxed opacity-0 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             הצוות שלנו מורכב ממפתחים, מעצבים ואנשי שיווק שחיים ונושמים את הרשת. המטרה שלנו היא לקחת את העסק שלך צעד אחד קדימה אל עבר העתיד.
