@@ -60,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 textShadow: '0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(217, 70, 239, 0.2)'
               }}
             >
-              Sabrik
+              Naxon
             </span>
             <span className="text-fuchsia-500 drop-shadow-[0_0_15px_rgba(217,70,239,0.8)]">.</span>
           </h1>
@@ -96,12 +96,6 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="absolute right-0 top-0 bottom-0 w-2 bg-white/50 blur-[2px]" style={{ left: `${progress}%` }}></div>
             </div>
           </div>
-        </div>
-        
-        {/* Activate System Message (Mockup based on screenshot bottom left) */}
-        <div className="absolute bottom-10 left-10 text-left opacity-30 hidden md:block" dir="ltr">
-           <h4 className="text-lg font-semibold text-gray-400">Activate Windows</h4>
-           <p className="text-sm text-gray-500">Go to Settings to activate Windows.</p>
         </div>
 
       </div>
